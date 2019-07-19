@@ -27,6 +27,7 @@ import com.imastudio.ojoldriverjuly.fcm.MyFirebaseInstanceIDService;
 import com.imastudio.ojoldriverjuly.helper.HeroHelper;
 import com.imastudio.ojoldriverjuly.helper.LocationMonitoringService;
 import com.imastudio.ojoldriverjuly.helper.SessionManager;
+import com.imastudio.ojoldriverjuly.model.ResponseDetailDriver;
 import com.imastudio.ojoldriverjuly.model.ResponseLoginRegis;
 import com.imastudio.ojoldriverjuly.network.InitRetrofit;
 
@@ -92,6 +93,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendLocation(String latitude, String longitude) {
+        String iddriver = manager.getIdUser();
+        String token = manager.getToken();
+        String device = HeroHelper.getDeviceUUID(this);
+        InitRetrofit.getInstance().insert_posisi_driver(token,device,latitude,iddriver, longitude).enqueue(new Callback<ResponseDetailDriver>() {
+            @Override
+            public void onResponse(Call<ResponseDetailDriver> call, Response<ResponseDetailDriver> response) {
+                String result = response.body().getResult();
+                String msg = response.body().getMsg();
+                if (result.equals("true")) {
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDetailDriver> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "gagal"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AsyncTaskTimer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 
     private void AsyncTaskTimer() {

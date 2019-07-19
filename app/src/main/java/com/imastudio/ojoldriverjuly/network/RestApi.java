@@ -72,6 +72,18 @@ public interface RestApi {
             @Field("f_iddriver") String f_iddriver
 
     );
+
+
+    @FormUrlEncoded
+    @POST("insert_posisi")
+    Call<ResponseDetailDriver> insert_posisi_driver(
+            @Field("f_token") String token,
+            @Field("f_device") String device,
+            @Field("f_lat") String lati,
+            @Field("f_idUser") String iduser,
+            @Field("f_lng") String longi
+
+    );
 //    @FormUrlEncoded
 //    @POST("insert_review")
 //    Call<ResponseDetailDriver>review(
@@ -139,5 +151,24 @@ public interface RestApi {
             @Field("f_idUser") String iduser,
             @Field("f_gcm") String fcm
             );
+
+    @FormUrlEncoded
+    @POST("take_booking")
+    Call<ResponseHistory> takeBooking(
+            @Field("f_iddriver") String iddriver,
+            @Field("id") String idbooking,
+            @Field("f_device") String device,
+            @Field("f_token") String token
+
+    );
+    @FormUrlEncoded
+    @POST("complete_booking")
+    Call<ResponseHistory> completeBooking(
+            @Field("f_idUser") String iddriver,
+            @Field("id") String idbooking,
+            @Field("f_device") String device,
+            @Field("f_token") String token
+
+    );
 
 }

@@ -195,17 +195,18 @@
                 android:background="#000"
                 android:textColor="#fff"
                 android:textStyle="bold" />
+
             <Button
+                android:id="@+id/CompleteBooking"
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="COMPLETE BOOKING"
-                android:visibility="gone"
-                android:id="@+id/CompleteBooking"
                 android:layout_marginTop="20dp"
                 android:background="#000"
+                android:text="COMPLETE BOOKING"
                 android:textColor="#fff"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

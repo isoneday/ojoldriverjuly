@@ -34,9 +34,9 @@ public class HistoryFragment extends Fragment {
     RecyclerView recyclerview;
     private SessionManager manager;
         int kodeHistory;
-    private List<DataHistory> dataHistory;
-    private List<DataHistory> dataHistory2;
-    private List<DataHistory> dataHistory3;
+    public static List<DataHistory> dataHistoryRequest;
+    public static List<DataHistory> dataHistoryProses;
+    public static List<DataHistory> dataHistoryComplete;
 
     public HistoryFragment(int i) {
         kodeHistory=i;
@@ -67,8 +67,8 @@ public class HistoryFragment extends Fragment {
                     String result= response.body().getResult();
                     String msg=response.body().getMsg();
                 if (result.equals("true")){
-                    dataHistory = response.body().getData();
-                    CustomRecycler adapter =new CustomRecycler(dataHistory,getActivity(),kodeHistory);
+                    dataHistoryRequest = response.body().getData();
+                    CustomRecycler adapter =new CustomRecycler(dataHistoryRequest,getActivity(),kodeHistory);
                     recyclerview.setAdapter(adapter);
                     recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
                 }
@@ -87,8 +87,8 @@ public class HistoryFragment extends Fragment {
                     String result = response.body().getResult();
                     String msg = response.body().getMsg();
                     if (result.equals("true")) {
-                        dataHistory2 =  response.body().getData();
-                        CustomRecycler adapter = new CustomRecycler(dataHistory2,getActivity(),kodeHistory);
+                        dataHistoryProses =  response.body().getData();
+                        CustomRecycler adapter = new CustomRecycler(dataHistoryProses,getActivity(),kodeHistory);
                         recyclerview.setAdapter(adapter);
                         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -107,8 +107,8 @@ public class HistoryFragment extends Fragment {
                     String result = response.body().getResult();
                     String msg = response.body().getMsg();
                     if (result.equals("true")) {
-                        dataHistory3 =   response.body().getData();
-                        CustomRecycler adapter = new CustomRecycler(dataHistory3,getActivity(), kodeHistory);
+                        dataHistoryComplete =   response.body().getData();
+                        CustomRecycler adapter = new CustomRecycler(dataHistoryComplete,getActivity(), kodeHistory);
                         recyclerview.setAdapter(adapter);
                         recyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
