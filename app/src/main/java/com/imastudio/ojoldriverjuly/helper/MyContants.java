@@ -5,7 +5,7 @@ package com.imastudio.ojoldriverjuly.helper;
  */
 //sas
 public class MyContants {
-    public static final String BASE_URL = "http://192.168.20.16/webser_ojol/api/";
+    public static final String BASE_URL = "http://192.168.60.65/webser_ojol/api/";
     public static final String BASE_MAP_URL = "https://maps.googleapis.com/maps/api/directions/";
     public static final int REQUEST_LOCATION = 1;
     public static final int LOKASIAWAL = 1;

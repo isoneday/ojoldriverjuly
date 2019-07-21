@@ -87,7 +87,8 @@ public class DetailOrderActivity extends FragmentActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapDetail);
         mapFragment.getMapAsync(this);
-        dataIdbooking = getIntent().getStringExtra(MyContants.IDBOOKING);
+    //        Log.d("idbookinganda", idBooking);
+
         index = getIntent().getIntExtra(MyContants.INDEX, 0);
         status = getIntent().getIntExtra(MyContants.STATUS, 0);
         if (status == 1) {
@@ -104,7 +105,9 @@ public class DetailOrderActivity extends FragmentActivity implements OnMapReadyC
             dataHistory = HistoryFragment.dataHistoryComplete.get(index);
 
         } else {
+            dataIdbooking = getIntent().getStringExtra(MyContants.IDBOOKING);
             int idbooking = Integer.parseInt(dataIdbooking);
+
             dataHistory = HistoryFragment.dataHistoryRequest.get(idbooking);
         }
         detailRequest();
@@ -200,13 +203,37 @@ public class DetailOrderActivity extends FragmentActivity implements OnMapReadyC
                 terimaOrder();
                 break;
             case R.id.CompleteBooking:
+                completeOrder();
                 break;
         }
     }
 
+    private void completeOrder() {
+        InitRetrofit.getInstance().completeBooking(iddriver, idBooking, device, token).enqueue(new Callback<ResponseHistory>() {
+            @Override
+            public void onResponse(Call<ResponseHistory> call, Response<ResponseHistory> response) {
+                String result = response.body().getResult();
+                String msg = response.body().getMsg();
+                if (result.equals("true")) {
+                    Toast.makeText(DetailOrderActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DetailOrderActivity.this, HistoryActivity.class));
+
+                }else{
+                    Toast.makeText(DetailOrderActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+                }
+
+                }
+
+            @Override
+            public void onFailure(Call<ResponseHistory> call, Throwable t) {
+                Toast.makeText(DetailOrderActivity.this, "gagal"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
     private void terimaOrder() {
-
-
         InitRetrofit.getInstance().takeBooking(iddriver, idBooking, device, token).enqueue(new Callback<ResponseHistory>() {
             @Override
             public void onResponse(Call<ResponseHistory> call, Response<ResponseHistory> response) {

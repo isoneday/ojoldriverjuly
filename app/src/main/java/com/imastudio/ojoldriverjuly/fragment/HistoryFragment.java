@@ -120,6 +120,25 @@ public class HistoryFragment extends Fragment {
 
                 }
             });
+        }else{
+            InitRetrofit.getInstance().getHistoryRequest().enqueue(new Callback<ResponseHistory>() {
+                @Override
+                public void onResponse(Call<ResponseHistory> call, Response<ResponseHistory> response) {
+                    String result= response.body().getResult();
+                    String msg=response.body().getMsg();
+                    if (result.equals("true")){
+                        dataHistoryRequest = response.body().getData();
+                        CustomRecycler adapter =new CustomRecycler(dataHistoryRequest,getActivity(),kodeHistory);
+                        recyclerview.setAdapter(adapter);
+                        recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseHistory> call, Throwable t) {
+
+                }
+            });
         }
     }
 }
